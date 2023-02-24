@@ -39,7 +39,7 @@ public class WebSecurityConfigurerImpl extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/register", "/actuator/shutdown").permitAll()
+                .antMatchers("/api/register", "/api/login").permitAll()
                 .anyRequest().authenticated();
     }
 
