@@ -23,11 +23,11 @@ public class UserService {
     }
 
     public User addUser(UserCreateDTO userCreateDTO) {
-        if (userDAO.findByUsername(userCreateDTO.getEmail()).isPresent()) {
+        if (userDAO.findByUsername(userCreateDTO.getUsername()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         User user = new User();
-        user.setUsername(userCreateDTO.getEmail());
+        user.setUsername(userCreateDTO.getUsername());
         user.setPassword(encoder.encode(userCreateDTO.getPassword()));
         user.setRole("USER");
 

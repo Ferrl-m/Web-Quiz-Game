@@ -27,13 +27,17 @@ public class WebSecurityConfigurerImpl extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(getEncoder());
 
         auth.inMemoryAuthentication()
-                .withUser("Admin").password("hardcoded").roles("ADMIN")
+                .withUser("admin@gmail.com").password("hardcoded").roles("ADMIN")
                 .and().passwordEncoder(getEncoder());
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
+        http.logout()
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login")
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
