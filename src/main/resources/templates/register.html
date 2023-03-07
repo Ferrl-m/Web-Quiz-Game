@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Registration</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="login-page">
+  <div class="form">
+    <form action="#" th:action="@{/api/register}" th:object="${userCreateDTO}" method="post">
+      <div class="form-group">
+        <input type="text" placeholder="Email" class="form-control" id="username" th:field="*{username}">
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Password" class="form-control" id="password" th:field="*{password}">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </div>
+      <div class="form-group">
+        <p th:text="${error}" class="text-danger"></p>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

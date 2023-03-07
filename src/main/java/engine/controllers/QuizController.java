@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class QuizController {
 
     private final QuizService quizService;
@@ -21,34 +22,34 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    @GetMapping("/api/quizzes/{id}")
+    @GetMapping("/quizzes/{id}")
     public Quiz quiz(@PathVariable int id) {
         return quizService.getQuiz(id);
     }
 
-    @GetMapping("/api/quizzes")
+    @GetMapping("/quizzes")
     public Page<Quiz> quiz(@RequestParam(defaultValue = "0") Integer page) {
         return quizService.getQuizList(page);
     }
 
-    @PostMapping("/api/quizzes")
+    @PostMapping("/quizzes")
     public Quiz create(@Valid @RequestBody QuizCreateDTO quizCreateDTO) {
         return quizService.addQuiz(quizCreateDTO);
     }
 
-    @PostMapping("/api/quizzes/{id}/solve")
+    @PostMapping("/quizzes/{id}/solve")
     public Map<String, Object> answer(@PathVariable int id, @RequestBody(required = false) Map<String, List<Integer>> answer) {
         if (quizService.checkAnswer(id, answer.get("answer"))) {
             return Map.of("success", true, "feedback","Congratulations, you're right!");
         } else return Map.of("success", false, "feedback", "Wrong answer! Please, try again.");
     }
 
-    @DeleteMapping("/api/quizzes/{id}")
+    @DeleteMapping("/quizzes/{id}")
     public ResponseEntity<Object> delete(@PathVariable int id) {
         return quizService.deleteQuiz(id);
     }
 
-    @GetMapping("/api/quizzes/completed")
+    @GetMapping("/quizzes/completed")
     public Page<CompletedQuiz>  getCompletedQuizzes(@RequestParam(defaultValue = "0") Integer page) {
         return quizService.getCompletedQuizzes(page);
     }

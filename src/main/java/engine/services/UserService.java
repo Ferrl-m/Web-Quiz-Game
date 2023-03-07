@@ -1,13 +1,12 @@
 package engine.services;
 
 import engine.controllers.DRO.UserCreateDTO;
+import engine.exceptions.UserException;
 import engine.models.User;
 import engine.repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -22,9 +21,9 @@ public class UserService {
         this.encoder = encoder;
     }
 
-    public User addUser(UserCreateDTO userCreateDTO) {
+    public User addUser(UserCreateDTO userCreateDTO) throws UserException {
         if (userDAO.findByUsername(userCreateDTO.getUsername()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new UserException("User with this email already exists");
         }
         User user = new User();
         user.setUsername(userCreateDTO.getUsername());
