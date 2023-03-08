@@ -1,17 +1,14 @@
 package engine.controllers;
 
-import com.sun.xml.bind.v2.TODO;
 import engine.controllers.DRO.UserCreateDTO;
 import engine.exceptions.UserException;
 import engine.models.User;
+import engine.security.UserDetailsServiceImpl;
 import engine.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
@@ -27,10 +24,10 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
@@ -49,20 +46,13 @@ public class UserController {
         if (result.hasErrors()) {
             return createModelAndView(new UserCreateDTO(), "Unacceptable username or password", "register");
         }
-
         User user;
         try {
             user = userService.addUser(userCreateDTO);
         } catch (UserException ex) {
             return createModelAndView(new UserCreateDTO(), ex.getMessage(), "register");
         }
-
-        // TODO remove authentication logic from controller
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-        // set authentication in SecurityContext
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        userDetailsService.setAuthentication(userDetailsService.loadUserByUsername(user.getUsername()));
 
         return new ModelAndView("index");
     }
@@ -79,12 +69,7 @@ public class UserController {
         if (result.hasErrors()) {
             return createModelAndView(new UserCreateDTO(), "Unacceptable username or password", "login");
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userCreateDTO.getUsername());
-        if (passwordEncoder.matches(userCreateDTO.getPassword(), userDetails.getPassword())) {
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            // set authentication in SecurityContext
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        if (userDetailsService.login(passwordEncoder, userCreateDTO)) {
             return new ModelAndView("index");
         } else return createModelAndView(new UserCreateDTO(), "Invalid username or password", "login");
     }
