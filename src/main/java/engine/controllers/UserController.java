@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
@@ -31,6 +30,11 @@ public class UserController {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/")
+    public ModelAndView home() {
+        return new ModelAndView("index");
     }
 
     @GetMapping("/register")
@@ -54,7 +58,7 @@ public class UserController {
         }
         userDetailsService.setAuthentication(userDetailsService.loadUserByUsername(user.getUsername()));
 
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/login")
@@ -70,7 +74,7 @@ public class UserController {
             return createModelAndView(new UserCreateDTO(), "Unacceptable username or password", "login");
         }
         if (userDetailsService.login(passwordEncoder, userCreateDTO)) {
-            return new ModelAndView("index");
+            return new ModelAndView("redirect:/");
         } else return createModelAndView(new UserCreateDTO(), "Invalid username or password", "login");
     }
 

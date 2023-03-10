@@ -37,13 +37,13 @@ public class WebSecurityConfigurerImpl extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/api/login")
+                .logoutSuccessUrl("/")
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/register", "/api/login", "/actuator", "/css/**", "/favicon.ico").permitAll()
+                .antMatchers("/register", "/login", "/actuator", "/css/**", "/favicon.ico", "/").permitAll()
                 .anyRequest().authenticated();
     }
 

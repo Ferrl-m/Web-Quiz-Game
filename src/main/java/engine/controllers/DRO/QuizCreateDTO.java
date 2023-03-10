@@ -17,5 +17,5 @@ public class QuizCreateDTO {
     @Size(min = 2)
     @NotNull
     private List<String> options;
-    private List<Integer> answer;
+    private String answer;
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Quiz</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Quiz Game</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="#">Play</a></li>
+      <li><a href="#">Leaderboard</a></li>
+    </ul>
+  </nav>
+  <div sec:authorize="isAnonymous()" class="login-signup">
+    <a href="/login">Login</a>
+    <a href="/register">Sign up</a>
+  </div>
+  <div sec:authorize="isAuthenticated()" class="login-signup">
+    <a href="/">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</header>
+
+<main>
+  <section class="quiz">
+    <form action="#" th:action="@{/quizzes/{id}/solve(id = ${quiz.getId()})}" th:object="${quiz}" method="post">
+      <h2 th:text="${quiz.getTitle()}"></h2>
+      <p th:text="${quiz.getText()}"></p>
+      <ol>
+        <li>
+          <input type="radio" id="optionA" name="option" th:value="${quiz.getOptions().get(0)}">
+          <label for="optionA" th:text="${quiz.getOptions().get(0)}"></label>
+        </li>
+        <li>
+          <input type="radio" id="optionB" name="option" th:value="${quiz.getOptions().get(1)}">
+          <label for="optionB" th:text="${quiz.getOptions().get(1)}"></label>
+        </li>
+        <li>
+          <input type="radio" id="optionC" name="option" th:value="${quiz.getOptions().get(2)}">
+          <label for="optionC" th:text="${quiz.getOptions().get(2)}"></label>
+        </li>
+        <li>
+          <input type="radio" id="optionD" name="option" th:value="${quiz.getOptions().get(3)}">
+          <label for="optionD" th:text="${quiz.getOptions().get(3)}"></label>
+        </li>
+      </ol>
+
+      <button type="submit">Submit Quiz</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2023 Quiz Game. All rights reserved.</p>
+</footer>
+</body>
+</html>

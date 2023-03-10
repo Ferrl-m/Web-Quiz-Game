@@ -35,9 +35,8 @@ public class Quiz {
     @NotNull
     @ElementCollection
     private List<String> options;
-    @ElementCollection
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Integer> answer;
+    private String answer;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

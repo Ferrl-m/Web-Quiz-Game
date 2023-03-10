@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Quiz Game</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-
+<header>
+    <h1>Quiz Game</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Play</a></li>
+            <li><a href="#">Leaderboard</a></li>
+        </ul>
+    </nav>
+    <div sec:authorize="isAnonymous()" class="login-signup">
+        <a href="/login">Login</a>
+        <a href="/register">Sign up</a>
+    </div>
+    <div sec:authorize="isAuthenticated()" class="login-signup">
+        <a href="/">Profile</a>
+        <a href="/logout">Logout</a>
+    </div>
+</header>
+<main>
+    <section class="banner">
+        <h2>Welcome to the Quiz Game</h2>
+        <p>Test your knowledge and compete with other players for the highest score!</p>
+        <a href="#" class="btn btn-play">Play Now</a>
+    </section>
+    <section class="features">
+        <h3>Features</h3>
+        <ul>
+            <li>Choose from a variety of quiz categories</li>
+            <li>Multiple choice questions with 4 options</li>
+            <li>10 questions per quiz</li>
+            <li>Real-time leaderboard with top scores</li>
+            <li>No registration required, play as a guest</li>
+        </ul>
+    </section>
+    <section class="how-to-play">
+        <h3>How to Play</h3>
+        <p>Playing the Quiz Game is easy and fun:</p>
+        <ol>
+            <li>Choose a quiz category</li>
+            <li>Answer 10 multiple choice questions as fast as you can</li>
+            <li>Get your score and compare it with other players on the leaderboard</li>
+        </ol>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2023 Quiz Game. All rights reserved.</p>
+</footer>
 </body>
 </html>

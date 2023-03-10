@@ -60,8 +60,8 @@ public class QuizService {
         return quizDAO.findAll(paging);
     }
 
-    public boolean checkAnswer(Integer id, List<Integer> answer) {
-        List<Integer> expected = new ArrayList<>(getQuiz(id).getAnswer());
+    public boolean checkAnswer(Integer id, String answer) {
+        String expected = getQuiz(id).getAnswer();
         if (expected.equals(answer)) {
             User user = getCurrentAuthUser();
             user.getCompletedQuizzes().add(new CompletedQuiz(user, id));
