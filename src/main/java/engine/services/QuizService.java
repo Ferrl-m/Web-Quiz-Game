@@ -46,6 +46,10 @@ public class QuizService {
         return quizDAO.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
     }
 
+    public Quiz getQuiz() {
+        return quizDAO.findRandom().orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+    }
+
     public Quiz addQuiz(QuizCreateDTO quizCreateDTO) {
         Quiz quiz = modelMapper.map(quizCreateDTO, Quiz.class);
 

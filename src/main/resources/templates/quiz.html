@@ -11,8 +11,7 @@
   <nav>
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="#">Play</a></li>
-      <li><a href="#">Leaderboard</a></li>
+      <li><a href="/quizzes/solve">Play</a></li>
     </ul>
   </nav>
   <div sec:authorize="isAnonymous()" class="login-signup">
@@ -31,20 +30,20 @@
       <h2 th:text="${quiz.getTitle()}"></h2>
       <p th:text="${quiz.getText()}"></p>
       <ol>
-        <li>
+        <li th:class="${answer != null and quiz.getOptions().get(0) == answer} ? (${isCorrect} ? 'correct' : 'incorrect') : ''">
           <input type="radio" id="optionA" name="option" th:value="${quiz.getOptions().get(0)}">
           <label for="optionA" th:text="${quiz.getOptions().get(0)}"></label>
         </li>
-        <li>
-          <input type="radio" id="optionB" name="option" th:value="${quiz.getOptions().get(1)}">
+        <li th:class="${answer != null and quiz.getOptions().get(1) == answer} ? (${isCorrect} ? 'correct' : 'incorrect') : ''">
+          <input type="radio" id="optionB" name="option" th:value="${quiz.getOptions().get(1)}" >
           <label for="optionB" th:text="${quiz.getOptions().get(1)}"></label>
         </li>
-        <li>
-          <input type="radio" id="optionC" name="option" th:value="${quiz.getOptions().get(2)}">
+        <li th:class="${answer != null and quiz.getOptions().get(2) == answer} ? (${isCorrect} ? 'correct' : 'incorrect') : ''">
+          <input type="radio" id="optionC" name="option" th:value="${quiz.getOptions().get(2)}" >
           <label for="optionC" th:text="${quiz.getOptions().get(2)}"></label>
         </li>
-        <li>
-          <input type="radio" id="optionD" name="option" th:value="${quiz.getOptions().get(3)}">
+        <li th:class="${answer != null and quiz.getOptions().get(3) == answer} ? (${isCorrect} ? 'correct' : 'incorrect') : ''">
+          <input type="radio" id="optionD" name="option" th:value="${quiz.getOptions().get(3)}" >
           <label for="optionD" th:text="${quiz.getOptions().get(3)}"></label>
         </li>
       </ol>

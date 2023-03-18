@@ -11,8 +11,7 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="#">Play</a></li>
-            <li><a href="#">Leaderboard</a></li>
+            <li><a href="/quizzes/solve">Play</a></li>
         </ul>
     </nav>
     <div sec:authorize="isAnonymous()" class="login-signup">
@@ -28,7 +27,7 @@
     <section class="banner">
         <h2>Welcome to the Quiz Game</h2>
         <p>Test your knowledge and compete with other players for the highest score!</p>
-        <a href="#" class="btn btn-play">Play Now</a>
+        <a href="/quizzes/solve" class="btn btn-play">Play Now</a>
     </section>
     <section class="features">
         <h3>Features</h3>
