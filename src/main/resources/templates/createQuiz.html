@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Creating Quiz</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+
+<header>
+  <h1>Quiz Game</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/quizzes/solve">Play</a></li>
+    </ul>
+  </nav>
+  <div sec:authorize="isAnonymous()" class="login-signup">
+    <a href="/login">Login</a>
+    <a href="/register">Sign up</a>
+  </div>
+  <div sec:authorize="isAuthenticated()" class="login-signup">
+    <a href="/">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</header>
+
+<section class="quiz">
+
+  <form action="#" th:action="@{/quizzes/create}" th:object="${quizCreateDTO}" method="post">
+      <h2>Create Quiz</h2>
+    <ol>
+      <li>
+        <input type="text" id="title" placeholder="Title" name="title" th:field="*{title}" required />
+      </li>
+     <li>
+       <input type="text" id="text" placeholder="Question" name="text" th:field="*{text}" required />
+     </li>
+
+      <li>
+        <input type="text" id="option1" placeholder="Option 1" name="options[0]" th:field="*{options[0]}" required />
+      </li>
+      <li>
+        <input type="text" id="option2" placeholder="Option 2" name="options[1]" th:field="*{options[1]}" required />
+      </li>
+
+      <li>
+        <input type="text" id="option3" placeholder="Option 3" name="options[2]" th:field="*{options[2]}" required />
+      </li>
+
+      <li>
+        <input type="text" id="option4" placeholder="Option 4" name="options[3]" th:field="*{options[3]}" required />
+      </li>
+
+      <li>
+        <select id="answer" name="answer" th:field="*{answer}" required>
+          <option value="" disabled selected>Select the correct answer</option>
+          <option value="0">Option 1</option>
+          <option value="1">Option 2</option>
+          <option value="2">Option 3</option>
+          <option value="3">Option 4</option>
+        </select>
+      </li>
+
+    </ol>
+
+      <div class="buttons">
+          <button type="submit">Create Quiz</button>
+      </div>
+
+  </form>
+</section>
+
+
+</body>
+</html>

@@ -28,6 +28,6 @@ public interface QuizDAO extends JpaRepository<Quiz, Integer> {
     @Override
     Page<Quiz> findAll(Pageable pageable);
 
-    @Query("SELECT q FROM Quiz q ORDER BY FUNCTION('RANDOM')")
+    @Query(value = "SELECT * FROM quizzes ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
     Optional<Quiz> findRandom();
 }

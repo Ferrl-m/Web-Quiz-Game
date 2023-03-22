@@ -48,7 +48,11 @@
         </li>
       </ol>
 
-      <button type="submit">Submit Quiz</button>
+      <div class="buttons">
+        <button type="submit">Submit Quiz</button>
+        <a th:if="${isCorrect}" href="/quizzes/solve">Next Quiz</a>
+      </div>
+
     </form>
   </section>
 </main>

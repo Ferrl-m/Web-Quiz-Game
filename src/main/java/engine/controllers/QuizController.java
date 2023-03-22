@@ -7,13 +7,11 @@ import engine.models.Quiz;
 import engine.services.QuizService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class QuizController {
@@ -34,9 +32,20 @@ public class QuizController {
         return quizService.getQuizList(page);
     }
 
-    @PostMapping("/quizzes")
-    public Quiz create(@Valid @RequestBody QuizCreateDTO quizCreateDTO) {
-        return quizService.addQuiz(quizCreateDTO);
+    @GetMapping("/quizzes/create")
+    public ModelAndView create () {
+        ModelAndView modelAndView = new ModelAndView("createQuiz");
+        modelAndView.addObject("quizCreateDTO", new QuizCreateDTO());
+
+        return modelAndView;
+    }
+
+    @PostMapping("/quizzes/create")
+    public ModelAndView create(@Valid @ModelAttribute("quizCreateDTo") QuizCreateDTO quizCreateDTO, BindingResult result) {
+        quizCreateDTO.setAnswer(quizCreateDTO.getOptions().get(Integer.parseInt(quizCreateDTO.getAnswer())));
+        quizService.addQuiz(quizCreateDTO);
+
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/quizzes/{id}/solve")
