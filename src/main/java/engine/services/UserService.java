@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class UserService {
 
@@ -23,11 +25,16 @@ public class UserService {
 
     public User addUser(UserCreateDTO userCreateDTO) throws UserException {
         if (userDAO.findByUsername(userCreateDTO.getUsername()).isPresent()) {
+            throw new UserException("User with this username already exists");
+        }
+        if (userDAO.findByEmail(userCreateDTO.getEmail()).isPresent()) {
             throw new UserException("User with this email already exists");
         }
         User user = new User();
         user.setUsername(userCreateDTO.getUsername());
+        user.setEmail(userCreateDTO.getEmail());
         user.setPassword(encoder.encode(userCreateDTO.getPassword()));
+        user.setCreatedAt(LocalDate.now());
         user.setRole("USER");
 
         return userDAO.save(user);

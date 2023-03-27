@@ -9,8 +9,9 @@
     <div class="login-page">
         <div class="form">
             <form action="#" th:action="@{/login}" th:object="${userCreateDTO}" method="post">
+                <input type="hidden" id="status" name="status" value="username" th:field="*{username}">
                 <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control" id="username" th:field="*{username}">
+                    <input type="text" placeholder="Email" class="form-control" id="username" th:field="*{email}">
                 </div>
                 <div class="form-group">
                     <input type="password" placeholder="Password" class="form-control" id="password" th:field="*{password}">

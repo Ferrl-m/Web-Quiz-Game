@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -23,8 +25,11 @@ public class User {
     private Integer id;
 
     @Column(name = "username", unique = true)
-    @Email
     private String username;
+
+    @Column(name = "email", unique = true)
+    @Email
+    private String email;
 
     @Column(name = "password")
     @Size(min = 5)
@@ -38,4 +43,5 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CompletedQuiz> completedQuizzes;
 
+    private LocalDate createdAt;
 }

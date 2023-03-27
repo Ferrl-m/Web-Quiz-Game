@@ -19,6 +19,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
     Optional<User> findByUsername(String username);
 
+    Optional<User> findByEmail(String email);
+
     @Query("SELECT new engine.models.CompletedQuiz(cq.user, cq.quizId, cq.completedAt) FROM CompletedQuiz cq WHERE cq.user.id = :userId")
     Page<CompletedQuiz> findCompletedQuizzesByUserId(@Param("userId") Integer userId, Pageable pageable);
 

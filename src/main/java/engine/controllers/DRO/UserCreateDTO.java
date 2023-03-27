@@ -11,9 +11,10 @@ public class UserCreateDTO {
 
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @NotBlank
+    private String email;
+    @NotBlank
     private String username;
     @Size(min = 5)
     @NotBlank
     private String password;
-
 }

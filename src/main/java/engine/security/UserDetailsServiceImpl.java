@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,9 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDAO.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userDAO.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
         return new UserDetailsImpl(user);
     }
@@ -39,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public boolean login (PasswordEncoder passwordEncoder, UserCreateDTO userCreateDTO) {
-        UserDetails userDetails = loadUserByUsername(userCreateDTO.getUsername());
+        UserDetails userDetails = loadUserByUsername(userCreateDTO.getEmail());
         if (passwordEncoder.matches(userCreateDTO.getPassword(), userDetails.getPassword())) {
             setAuthentication(userDetails);
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+<header>
+    <h1>Quiz Game</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/quizzes/solve">Play</a></li>
+            <li><a href="/quizzes/create">Create Quiz</a></li>
+        </ul>
+    </nav>
+    <div sec:authorize="isAnonymous()" class="login-signup">
+        <a href="/login">Login</a>
+        <a href="/register">Sign up</a>
+    </div>
+    <div sec:authorize="isAuthenticated()" class="login-signup">
+
+        <a href="/logout">Logout</a>
+    </div>
+</header>
+<div id="container">
+    <div id="left-column">
+        <h2>Profile Information</h2>
+        <ul>
+            <li>
+                <strong>Username:</strong>
+                <span th:text="${username}"></span>
+            </li>
+            <li>
+                <strong>Email:</strong>
+                <span th:text="${email}"></span>
+            </li>
+            <li>
+                <strong>Joined:</strong>
+                <span th:text="${createdAt}"></span>
+            </li>
+        </ul>
+    </div>
+    <div id="right-column">
+        <h2>Quiz Statistics</h2>
+        <p>
+            <strong>Quizzes Completed:</strong>
+            <span th:text="${completed}"></span>
+        </p>
+        <p><strong>Quizzes Created:</strong> 4</p>
+    </div>
+</div>
+</body>
+</html>

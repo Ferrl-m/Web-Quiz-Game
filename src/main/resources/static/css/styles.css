@@ -334,3 +334,28 @@ select#answer option:checked {
 select#answer option:hover {
     background-color: #f5f5f5;
 }
+#container {
+    width: 80%;
+    margin-top: 10px;
+    display: flex;
+}
+
+/* Style the left column */
+#left-column {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+/* Style the right column */
+#right-column {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+}

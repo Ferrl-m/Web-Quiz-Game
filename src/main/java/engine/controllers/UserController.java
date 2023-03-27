@@ -3,6 +3,7 @@ package engine.controllers;
 import engine.controllers.DRO.UserCreateDTO;
 import engine.exceptions.UserException;
 import engine.models.User;
+import engine.repositories.UserDAO;
 import engine.security.UserDetailsServiceImpl;
 import engine.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +27,14 @@ public class UserController {
     private final UserService userService;
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final UserDAO userDAO;
 
-    public UserController(UserService userService, UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder,
+                          UserDAO userDAO) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.userDAO = userDAO;
     }
 
     @GetMapping("/")
@@ -64,7 +69,9 @@ public class UserController {
     @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("userCreateDTO", new UserCreateDTO());
+        UserCreateDTO userCreateDTO = new UserCreateDTO();
+        userCreateDTO.setUsername("username");
+        modelAndView.addObject("userCreateDTO", userCreateDTO);
         return modelAndView;
     }
 
@@ -86,6 +93,23 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Logout successful");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Logout failed");
+    }
+
+    @GetMapping("/profile/{username}")
+    public ModelAndView profile(@PathVariable String username) {
+        User user = userDAO.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        ModelAndView modelAndView = new ModelAndView("profile");
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("email", user.getEmail());
+        modelAndView.addObject("createdAt", user.getCreatedAt());
+        modelAndView.addObject("completed", user.getCompletedQuizzes().size());
+
+        return modelAndView;
+    }
+
+    @GetMapping("/profile")
+    public ModelAndView profile(Authentication authentication) {
+        return new ModelAndView("redirect:/profile/" + authentication.getName());
     }
 
     private static ModelAndView createModelAndView(UserCreateDTO userCreateDTO, String errorMessage, String page) {

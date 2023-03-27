@@ -12,6 +12,7 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/quizzes/solve">Play</a></li>
+            <li><a href="/quizzes/create">Create Quiz</a></li>
         </ul>
     </nav>
     <div sec:authorize="isAnonymous()" class="login-signup">
@@ -19,7 +20,7 @@
         <a href="/register">Sign up</a>
     </div>
     <div sec:authorize="isAuthenticated()" class="login-signup">
-        <a href="/">Profile</a>
+        <a href="/profile">Profile</a>
         <a href="/logout">Logout</a>
     </div>
 </header>
