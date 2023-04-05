@@ -53,7 +53,9 @@ public class QuizService {
     public Quiz addQuiz(QuizCreateDTO quizCreateDTO) {
         Quiz quiz = modelMapper.map(quizCreateDTO, Quiz.class);
 
-        quiz.setUser(getCurrentAuthUser());
+        User user = getCurrentAuthUser();
+        quiz.setUser(user);
+        user.setQuizzesCreated(user.getQuizzesCreated() + 1);
 
         return quizDAO.save(quiz);
     }

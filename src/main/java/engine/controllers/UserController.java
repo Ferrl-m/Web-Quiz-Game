@@ -13,10 +13,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.Registration;
+import javax.validation.groups.Default;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -51,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute("userCreateDTO") UserCreateDTO userCreateDTO, BindingResult result) {
+    public ModelAndView register(@Validated({Registration.class, Default.class}) @ModelAttribute("userCreateDTO") UserCreateDTO userCreateDTO, BindingResult result) {
         if (result.hasErrors()) {
             return createModelAndView(new UserCreateDTO(), "Unacceptable username or password", "register");
         }
@@ -61,7 +64,7 @@ public class UserController {
         } catch (UserException ex) {
             return createModelAndView(new UserCreateDTO(), ex.getMessage(), "register");
         }
-        userDetailsService.setAuthentication(userDetailsService.loadUserByUsername(user.getUsername()));
+        userDetailsService.setAuthentication(userDetailsService.loadUserByUsername(user.getEmail()));
 
         return new ModelAndView("redirect:/");
     }
@@ -103,6 +106,7 @@ public class UserController {
         modelAndView.addObject("email", user.getEmail());
         modelAndView.addObject("createdAt", user.getCreatedAt());
         modelAndView.addObject("completed", user.getCompletedQuizzes().size());
+        modelAndView.addObject("quizzesCreated", user.getQuizzesCreated());
 
         return modelAndView;
     }

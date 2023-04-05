@@ -82,13 +82,13 @@ nav li {
     margin-right: 1rem;
 }
 
-nav a {
+header a {
     color: #333;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
-nav a:hover {
+header a:hover {
     color: #6f42c1;
 }
 

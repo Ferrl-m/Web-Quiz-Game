@@ -44,4 +44,6 @@ public class User {
     private Set<CompletedQuiz> completedQuizzes;
 
     private LocalDate createdAt;
+
+    private int quizzesCreated;
 }

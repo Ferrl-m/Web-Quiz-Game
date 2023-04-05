@@ -70,9 +70,7 @@ public class QuizController {
 
     @PostMapping("/quizzes/{id}/solve")
     public ModelAndView solve(@PathVariable int id, @RequestParam String option) {
-        Quiz quiz = quizService.getQuiz(id);
-        String answer = quiz.getAnswer();
-        boolean isCorrect = option.equals(answer);
+        boolean isCorrect = quizService.checkAnswer(id, option);
         ModelAndView modelAndView = new ModelAndView("redirect:/quizzes/" + id + "/solve");
 
         modelAndView.addObject("isCorrect", isCorrect);
