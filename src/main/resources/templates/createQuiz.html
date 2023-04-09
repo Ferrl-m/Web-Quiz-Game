@@ -30,37 +30,48 @@
   <form action="#" th:action="@{/quizzes/create}" th:object="${quizCreateDTO}" method="post">
       <h2>Create Quiz</h2>
     <ol>
-      <li>
-        <input type="text" id="title" placeholder="Title" name="title" th:field="*{title}" required />
-      </li>
-     <li>
-       <input type="text" id="text" placeholder="Question" name="text" th:field="*{text}" required />
-     </li>
+        <li>
+            <input type="text" id="title" placeholder="Title" name="title" th:field="*{title}" required />
+        </li>
+        <li>
+            <input type="text" id="text" placeholder="Question" name="text" th:field="*{text}" required />
+        </li>
 
-      <li>
-        <input type="text" id="option1" placeholder="Option 1" name="options[0]" th:field="*{options[0]}" required />
-      </li>
-      <li>
-        <input type="text" id="option2" placeholder="Option 2" name="options[1]" th:field="*{options[1]}" required />
-      </li>
+        <li>
+            <input type="text" id="option1" placeholder="Option 1" name="options[0]" th:field="*{options[0]}" required />
+        </li>
 
-      <li>
-        <input type="text" id="option3" placeholder="Option 3" name="options[2]" th:field="*{options[2]}" required />
-      </li>
+        <li>
+            <input type="text" id="option2" placeholder="Option 2" name="options[1]" th:field="*{options[1]}" required />
+        </li>
 
-      <li>
-        <input type="text" id="option4" placeholder="Option 4" name="options[3]" th:field="*{options[3]}" required />
-      </li>
+        <li>
+            <input type="text" id="option3" placeholder="Option 3" name="options[2]" th:field="*{options[2]}" required />
+        </li>
 
-      <li>
-        <select id="answer" name="answer" th:field="*{answer}" required>
-          <option value="" selected disabled>Select the correct answer</option>
-          <option value="0">Option 1</option>
-          <option value="1">Option 2</option>
-          <option value="2">Option 3</option>
-          <option value="3">Option 4</option>
-        </select>
-      </li>
+        <li>
+            <input type="text" id="option4" placeholder="Option 4" name="options[3]" th:field="*{options[3]}" required />
+        </li>
+
+        <li>
+            <select id="answer" name="answer" th:field="*{answer}" required>
+                <option value="" selected disabled>Select the correct answer</option>
+                <option value="0">Option 1</option>
+                <option value="1">Option 2</option>
+                <option value="2">Option 3</option>
+                <option value="3">Option 4</option>
+            </select>
+
+        </li>
+
+        <li>
+            <select id="theme" name="themes" th:field="*{theme}" required>
+                <option value="" selected disabled>Select theme</option>
+                <option value="MATH">Math</option>
+                <option value="GEOGRAPHY">Geography</option>
+                <option value="HISTORY">History</option>
+            </select>
+        </li>
 
     </ol>
 

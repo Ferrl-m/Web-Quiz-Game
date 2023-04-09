@@ -41,7 +41,7 @@ public class QuizController {
     }
 
     @PostMapping("/quizzes/create")
-    public ModelAndView create(@Valid @ModelAttribute("quizCreateDTo") QuizCreateDTO quizCreateDTO, BindingResult result) {
+    public ModelAndView create(@Valid @ModelAttribute("quizCreateDTo") QuizCreateDTO quizCreateDTO) {
         quizCreateDTO.setAnswer(quizCreateDTO.getOptions().get(Integer.parseInt(quizCreateDTO.getAnswer())));
         quizService.addQuiz(quizCreateDTO);
 

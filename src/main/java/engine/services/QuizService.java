@@ -1,6 +1,7 @@
 package engine.services;
 
 import engine.controllers.DRO.QuizCreateDTO;
+import engine.enums.Themes;
 import engine.models.CompletedQuiz;
 import engine.models.Quiz;
 import engine.models.User;
@@ -52,6 +53,7 @@ public class QuizService {
 
     public Quiz addQuiz(QuizCreateDTO quizCreateDTO) {
         Quiz quiz = modelMapper.map(quizCreateDTO, Quiz.class);
+        quiz.setTheme(Themes.valueOf(quizCreateDTO.getTheme()));
 
         User user = getCurrentAuthUser();
         quiz.setUser(user);

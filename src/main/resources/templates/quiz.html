@@ -27,6 +27,7 @@
   <section class="quiz">
     <form action="#" th:action="@{/quizzes/{id}/solve(id = ${quiz.getId()})}" th:object="${quiz}" method="post">
       <h2 th:text="${quiz.getTitle()}"></h2>
+      <h5 th:text="${quiz.getTheme().getTitle()}"></h5>
       <p th:text="${quiz.getText()}"></p>
       <ol>
         <li th:class="${answer != null and quiz.getOptions().get(0) == answer} ? (${isCorrect} ? 'correct' : 'incorrect') : ''">
