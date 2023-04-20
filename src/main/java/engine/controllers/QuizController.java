@@ -1,17 +1,15 @@
 package engine.controllers;
 
 import engine.controllers.DRO.QuizCreateDTO;
-import engine.controllers.DRO.UserCreateDTO;
-import engine.models.CompletedQuiz;
 import engine.models.Quiz;
 import engine.services.QuizService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class QuizController {
@@ -22,16 +20,27 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    @GetMapping("/quizzes/{id}")
+    // Get quiz by id
+    @GetMapping("/quiz/{id}")
     public Quiz quiz(@PathVariable int id) {
         return quizService.getQuiz(id);
     }
 
-    @GetMapping("/quizzes")
-    public Page<Quiz> quiz(@RequestParam(defaultValue = "0") Integer page) {
-        return quizService.getQuizList(page);
+    // Get all quizzes
+    @GetMapping("/quizzes/{page}")
+    public ModelAndView quizzes(@PathVariable int page) {
+        Page<Quiz> quizPage = quizService.getQuizList(page);
+        List<Quiz> quizzes = quizPage.getContent();
+
+        ModelAndView modelAndView = new ModelAndView("quizzes");
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", quizPage.getTotalPages());
+        modelAndView.addObject("quizzes", quizzes);
+
+        return modelAndView;
     }
 
+    // Create quiz
     @GetMapping("/quizzes/create")
     public ModelAndView create () {
         ModelAndView modelAndView = new ModelAndView("createQuiz");
@@ -48,6 +57,7 @@ public class QuizController {
         return new ModelAndView("redirect:/");
     }
 
+    // Solve quiz (by id)
     @GetMapping("/quizzes/{id}/solve")
     public ModelAndView solve(@PathVariable int id, @RequestParam(required = false) String answer, @RequestParam(required = false) boolean isCorrect) {
         ModelAndView modelAndView = new ModelAndView("quiz");
@@ -58,6 +68,7 @@ public class QuizController {
         return modelAndView;
     }
 
+    // Solve quiz (random)
     @GetMapping("/quizzes/solve")
     public ModelAndView solve(@RequestParam(required = false) String answer, @RequestParam(required = false) boolean isCorrect) {
         ModelAndView modelAndView = new ModelAndView("quiz");
@@ -79,13 +90,24 @@ public class QuizController {
         return modelAndView;
     }
 
+    // Delete quiz
     @DeleteMapping("/quizzes/{id}")
     public ResponseEntity<Object> delete(@PathVariable int id) {
         return quizService.deleteQuiz(id);
     }
 
-    @GetMapping("/quizzes/completed")
-    public Page<CompletedQuiz>  getCompletedQuizzes(@RequestParam(defaultValue = "0") Integer page) {
-        return quizService.getCompletedQuizzes(page);
+    // Get quizzes by theme
+    @GetMapping("/quizzes/{theme}/{page}")
+    public ModelAndView quizzes(@PathVariable String theme, @PathVariable int page) {
+        Page<Quiz> quizPage = quizService.getThemeQuizzes(theme, page);
+        List<Quiz> quizzes = quizPage.getContent();
+
+        ModelAndView modelAndView = new ModelAndView("theme");
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", quizPage.getTotalPages());
+        modelAndView.addObject("theme", theme.toUpperCase().charAt(0) + theme.substring(1));
+        modelAndView.addObject("quizzes", quizzes);
+
+        return modelAndView;
     }
 }

@@ -42,5 +42,6 @@ public class Quiz {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @Enumerated(EnumType.STRING)
     private Themes theme;
 }

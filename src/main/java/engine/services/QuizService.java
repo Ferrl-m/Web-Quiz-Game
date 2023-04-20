@@ -62,10 +62,16 @@ public class QuizService {
         return quizDAO.save(quiz);
     }
 
-    public Page<Quiz> getQuizList(Integer pageNo) {
+    public Page<Quiz> getQuizList(int pageNo) {
         Pageable paging = PageRequest.of(pageNo, 10);
 
         return quizDAO.findAll(paging);
+    }
+
+    public Page<Quiz> getThemeQuizzes(String theme, int pageNo) {
+        Pageable paging = PageRequest.of(pageNo, 10);
+
+        return quizDAO.findAllByTheme(theme.toUpperCase(), paging);
     }
 
     public boolean checkAnswer(Integer id, String answer) {

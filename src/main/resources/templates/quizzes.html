@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quizzes</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+  <a href="/"><h1>Quiz Game</h1></a>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/quizzes/solve">Play</a></li>
+      <li><a href="/quizzes/create">Create Quiz</a></li>
+    </ul>
+  </nav>
+  <div class="login-signup">
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</header>
+<h1>Quizzes</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Theme</th>
+    <th>Title</th>
+    <th>Question</th>
+    <th>Author</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="quiz : ${quizzes}">
+    <td><a th:href="@{/quizzes/{theme}/0(theme=${quiz.getTheme()})}" th:text="${quiz.theme}">${quiz.theme}</a></td>
+    <td th:text="${quiz.title}"></td>
+    <td th:text="${quiz.text}"></td>
+    <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}">username</a></td>
+    <td><a th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</a></td>
+  </tr>
+  </tbody>
+</table>
+<div class="paging" >
+  <a th:if="${currentPage > 0}" th:href="@{/quizzes/{page}(page=${currentPage - 1})}">&lt;&lt; Previous</a>
+  <a th:if="${currentPage < totalPages - 1}" th:href="@{/quizzes/{page}(page=${currentPage + 1})}">Next &gt;&gt;</a>
+</div>
+</body>
+</html>

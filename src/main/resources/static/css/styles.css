@@ -116,7 +116,7 @@ header a:hover {
     text-align: center;
 }
 
-.banner h2 {
+h2 {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
@@ -183,11 +183,13 @@ header a:hover {
 
 /* Footer styles */
 footer {
-    background-color: #f5f5f5;
-    color: #666;
-    font-size: 1.2rem;
-    padding: 1rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     text-align: center;
+    background-color: #f2f2f2;
+    padding: 10px;
 }
 
 footer p {
@@ -358,4 +360,104 @@ select option:hover {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     margin-left: 20px;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 30px auto;
+}
+
+thead {
+    background-color: #6f42c1;
+    color: #fff;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+.paging a {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #6f42c1;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.paging a:hover {
+    background-color: #6f42c1;
+}
+
+div.paging {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+td a {
+    color: #333;
+    margin-left: 1rem;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+/*themes*/
+
+.themes {
+    text-align: center;
+}
+
+.themes-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.theme-link {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 40px;
+    color: white;
+    -webkit-text-stroke: 1px black;
+}
+
+.math {
+    background-image: url("https://news.harvard.edu/wp-content/uploads/2022/11/iStock-mathproblems-1200x800.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.history {
+    background-image: url("https://media.nationalgeographic.org/assets/photos/141/591/6a85829d-16e1-4392-be49-74e0461e77ec_c0-297-4188-2495_r1200x630.JPG?0f481eced7cee696f7e53ac13a36ba393a4f0fc6");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.geography {
+    background-image: url("https://0utwqfl7.cdn.imgeng.in/explore-academics/programs/images/undergraduate/henson/geographymajorMH.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }

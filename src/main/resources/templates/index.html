@@ -29,8 +29,25 @@
         <h2>Welcome to the Quiz Game</h2>
         <p>Test your knowledge and solve quizzes made by other players!</p>
         <a href="/quizzes/solve" class="btn btn-play">Play Now</a>
+        <a href="/quizzes/0" class="btn btn-play">All quizzes</a>
+    </section>
+    <hr>
+    <section class="themes">
+        <h2>Select a Theme</h2>
+        <div class="themes-grid">
+            <a th:href="@{/quizzes/math/0}" class="theme-link math">
+                <span>Math</span>
+            </a>
+            <a th:href="@{/quizzes/history/0}" class="theme-link history">
+                <span>History</span>
+            </a>
+            <a th:href="@{/quizzes/geography/0}" class="theme-link geography">
+                <span>Geography</span>
+            </a>
+        </div>
     </section>
 </main>
+<hr>
 <footer>
     <p>&copy; 2023 Quiz Game. All rights reserved.</p>
 </footer>
