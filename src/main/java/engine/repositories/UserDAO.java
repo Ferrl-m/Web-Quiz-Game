@@ -17,6 +17,9 @@ public interface UserDAO extends JpaRepository<User, Integer> {
     @Override
     User save(User user);
 
+    @Override
+    void delete(User user);
+
     Optional<User> findByUsername(String username);
 
     Optional<User> findByEmail(String email);

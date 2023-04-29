@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>My Profile</title>
     <link rel="stylesheet" href="/css/profile.css">
+    <script src="/js/script.js"></script>
 </head>
 <body>
 <header>
@@ -24,35 +25,22 @@
         <a href="/logout">Logout</a>
     </div>
 </header>
-<div id="container">
-    <div id="left-column">
-        <h2>Profile Information</h2>
+
+
+<main>
+    <section id="user-info">
+        <h2>User Card</h2>
         <ul>
-            <li>
-                <strong>Username:</strong>
-                <span th:text="${username}"></span>
-            </li>
-            <li>
-                <strong>Email:</strong>
-                <span th:text="${email}"></span>
-            </li>
-            <li>
-                <strong>Joined:</strong>
-                <span th:text="${createdAt}"></span>
+            <li><span>Username:</span> <span th:text="${username}"></span> </li>
+            <li><span>Joined:</span><span th:text="${createdAt}"></span></li>
+            <li><span>Completed Quizzes:</span><span th:text="${completed}"></span></li>
+            <li><span>Created Quizzes:</span> <span th:text="${quizzesCreated}"></span></li>
+            <li th:if="${#authentication.name == username}">
+                <button type="button" class="btn" onclick="location.href='/users/change-credentials'">Change Credentials</button>
+                <button type="button" class="btn delete" th:attr="onclick=|confirmDelete('${username}')|">Delete Account</button>
             </li>
         </ul>
-    </div>
-    <div id="right-column">
-        <h2>Quiz Statistics</h2>
-        <p>
-            <strong>Quizzes Completed:</strong>
-            <span th:text="${completed}"></span>
-        </p>
-        <p>
-            <strong>Quizzes Created:</strong>
-            <span th:text="${quizzesCreated}"></span>
-        </p>
-    </div>
-</div>
+    </section>
+</main>
 </body>
 </html>

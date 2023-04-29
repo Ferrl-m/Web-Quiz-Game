@@ -17,7 +17,7 @@
         </ul>
     </nav>
     <div class="login-signup">
-        <a href="/profile">Profile</a>
+        <a th:href="@{/profile/__${#authentication.name}__}">Profile</a>
         <a href="/logout">Logout</a>
     </div>
 </header>

@@ -6,6 +6,7 @@ import engine.models.User;
 import engine.repositories.UserDAO;
 import engine.security.UserDetailsServiceImpl;
 import engine.services.UserService;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.Registration;
 import javax.validation.groups.Default;
@@ -111,9 +113,24 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/profile")
-    public ModelAndView profile(Authentication authentication) {
-        return new ModelAndView("redirect:/profile/" + authentication.getName());
+    @DeleteMapping("/users/delete/{username}")
+    public ResponseEntity<String> delete(@PathVariable String username) {
+        return userService.deleteUser(username);
+    }
+
+    @GetMapping("/users/change-credentials")
+    public ModelAndView changeCredentials() {
+        return new ModelAndView("credentials");
+    }
+
+    @PostMapping("/users/change-credentials")
+    public ModelAndView changeCredentials(@RequestParam(name = "newUsername", required = false) String newUsername,
+                                    @RequestParam(name = "newEmail", required = false) String newEmail,
+                                    @RequestParam(name = "newPassword", required = false) String newPassword,
+                                    Authentication authentication,
+                                    RedirectAttributes redirectAttributes) {
+
+        return userService.update(authentication, newUsername, newEmail, newPassword, redirectAttributes);
     }
 
     private static ModelAndView createModelAndView(UserCreateDTO userCreateDTO, String errorMessage, String page) {

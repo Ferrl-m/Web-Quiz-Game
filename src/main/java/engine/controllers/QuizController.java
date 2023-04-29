@@ -91,9 +91,11 @@ public class QuizController {
     }
 
     // Delete quiz
-    @DeleteMapping("/quizzes/{id}")
-    public ResponseEntity<Object> delete(@PathVariable int id) {
-        return quizService.deleteQuiz(id);
+    @DeleteMapping("/quizzes/delete/{id}")
+    public String delete(@PathVariable int id) {
+        quizService.deleteQuiz(id);
+
+        return "redirect:/";
     }
 
     // Get quizzes by theme
