@@ -5,6 +5,7 @@ import engine.models.Quiz;
 import engine.services.QuizService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -98,6 +99,10 @@ public class QuizController {
         return "redirect:/";
     }
 
+    @PostMapping("/quizzes/rate/{id}")
+    public void rate(@PathVariable int id, @RequestParam("rating") Integer rating) {
+        quizService.setRatings(id, rating);
+    }
     // Get quizzes by theme
     @GetMapping("/quizzes/{theme}/{page}")
     public ModelAndView quizzes(@PathVariable String theme, @PathVariable int page) {

@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Quizzes</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="/js/script.js"></script>
 </head>
 <body>
 
@@ -22,20 +23,21 @@
   </div>
 </header>
 <h1>Quizzes</h1>
-<table>
+<table id="myTable">
   <thead>
   <tr>
-    <th>Theme</th>
-    <th>Title</th>
-    <th>Question</th>
-    <th>Author</th>
+    <th onclick="sortTable(0)">Theme</th>
+    <th onclick="sortTable(2)">Title</th>
+    <th onclick="sortTable(3)">Rating</th>
+    <th onclick="sortTable(4)">Author</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="quiz : ${quizzes}">
     <td><a th:href="@{/quizzes/{theme}/0(theme=${quiz.getTheme()})}" th:text="${quiz.theme}">${quiz.theme}</a></td>
     <td th:text="${quiz.title}"></td>
-    <td th:text="${quiz.text}"></td>
+    <td th:text="${quiz.rating}"></td>
     <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}">username</a></td>
     <td><a th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</a></td>
   </tr>

@@ -277,7 +277,7 @@ input[type="radio"] {
     cursor: pointer;
 }
 
-input[type="radio"]:checked + label {
+li input[type="radio"]:checked + label {
     border-color: #6f42c1;
     background-color: #6f42c1;
     color: white;
@@ -381,15 +381,13 @@ th, td {
 
 th {
     font-weight: bold;
+    cursor: pointer;
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-tr:hover {
-    background-color: #ddd;
-}
 .paging a {
     display: inline-block;
     text-align: center;
@@ -460,4 +458,41 @@ td a {
     background-image: url("https://0utwqfl7.cdn.imgeng.in/explore-academics/programs/images/undergraduate/henson/geographymajorMH.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 40px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '\2605';
+}
+
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
 }

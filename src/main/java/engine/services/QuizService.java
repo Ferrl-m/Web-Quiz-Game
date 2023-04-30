@@ -14,13 +14,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.*;
@@ -112,5 +112,24 @@ public class QuizService {
         Pageable paging = PageRequest.of(pageNo, 10, Sort.by("completedAt").descending());
 
         return userDAO.findCompletedQuizzesByUserId(getCurrentAuthUser().getId(), paging);
+    }
+
+    public void setRatings(Integer id, Integer rating) {
+        User user = getCurrentAuthUser();
+        Quiz quiz = getQuiz(id);
+        quiz.getRatings().put(user, rating);
+        quiz.setRating(getAverageRating(id));
+
+        quizDAO.save(quiz);
+    }
+
+    public double getAverageRating(Integer id) {
+        double sum = 0.0;
+        Map<User, Integer> map = getQuiz(id).getRatings();
+        for (float rating : map.values()) {
+            sum += rating;
+        }
+
+        return sum / map.size();
     }
 }
