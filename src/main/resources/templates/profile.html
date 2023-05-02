@@ -21,7 +21,7 @@
         <a href="/register">Sign up</a>
     </div>
     <div sec:authorize="isAuthenticated()" class="login-signup">
-
+        <a th:href="@{/quizzes/user/0/__${#authentication.name}__}">My Quizzes</a>
         <a href="/logout">Logout</a>
     </div>
 </header>
@@ -34,7 +34,7 @@
             <li><span>Username:</span> <span th:text="${username}"></span> </li>
             <li><span>Joined:</span><span th:text="${createdAt}"></span></li>
             <li><span>Completed Quizzes:</span><span th:text="${completed}"></span></li>
-            <li><span>Created Quizzes:</span> <span th:text="${quizzesCreated}"></span></li>
+            <li><a th:href="@{/quizzes/{username}/0(username=${username})}"><span >Created Quizzes:</span> <span th:text="${quizzesCreated}"></span></a></li>
             <li th:if="${#authentication.name == username}">
                 <button type="button" class="btn" onclick="location.href='/users/change-credentials'">Change Credentials</button>
                 <button type="button" class="btn delete" th:attr="onclick=|confirmDelete('${username}')|">Delete Account</button>

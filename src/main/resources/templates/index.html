@@ -20,6 +20,7 @@
         <a href="/register">Sign up</a>
     </div>
     <div sec:authorize="isAuthenticated()" class="login-signup">
+        <a th:href="@{/quizzes/user/0/__${#authentication.name}__}">My Quizzes</a>
         <a th:href="@{/profile/__${#authentication.name}__}">Profile</a>
         <a href="/logout">Logout</a>
     </div>

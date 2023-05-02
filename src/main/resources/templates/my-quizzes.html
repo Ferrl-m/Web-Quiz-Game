@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Quizzes</title>
+  <title>My Quizzes</title>
   <link rel="stylesheet" href="/css/styles.css">
   <script src="/js/script.js"></script>
 </head>
@@ -35,8 +35,8 @@
       <th onclick="sortTable(0)">Theme</th>
       <th onclick="sortTable(1)">Title</th>
       <th onclick="sortTable(2)">Rating</th>
-      <th onclick="sortTable(3)">Author</th>
       <th></th>
+      <th th:if="${#authentication.name == username}"></th>
     </tr>
     </thead>
     <tbody>
@@ -44,14 +44,14 @@
       <td><a th:href="@{/quizzes/{theme}/0(theme=${quiz.getTheme()})}" th:text="${quiz.theme}">${quiz.theme}</a></td>
       <td th:text="${quiz.title}"></td>
       <td th:text="${quiz.rating}"></td>
-      <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}">username</a></td>
       <td><a th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</a></td>
+      <td th:if="${#authentication.name == username}"><a class="text-danger" th:attr="onclick=|confirmQuizDelete('${quiz.getId()}')|">Delete</a></td>
     </tr>
     </tbody>
   </table>
   <div class="paging" >
-    <a th:if="${currentPage > 0}" th:href="@{/quizzes/{page}(page=${currentPage - 1})}">&lt;&lt; Previous</a>
-    <a th:if="${currentPage < totalPages - 1}" th:href="@{/quizzes/{page}(page=${currentPage + 1})}">Next &gt;&gt;</a>
+    <a th:if="${currentPage > 0}" th:href="@{/quizzes/{username}/{page}(username=${username},page=${currentPage - 1})}">&lt;&lt; Previous</a>
+    <a th:if="${currentPage < totalPages - 1}" th:href="@{/quizzes/{username}/{page}(username=${username},page=${currentPage + 1})}">Next &gt;&gt;</a>
   </div>
 </div>
 

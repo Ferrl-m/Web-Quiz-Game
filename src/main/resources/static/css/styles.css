@@ -460,6 +460,49 @@ td a {
     background-size: cover;
 }
 
+.table-container {
+    margin-top: 20px;
+}
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#searchInput {
+    font-size: 18px;
+    padding: 8px 50px 8px 10px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    width: 400px;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#searchInput:focus {
+    outline: none;
+}
+
+#searchBtn {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 762px;
+    padding: 8px 15px;
+    border-radius: 25px;
+}
+
+#searchBtn:hover {
+    background-color: #ddd;
+}
+
 .rate {
     float: left;
     height: 46px;

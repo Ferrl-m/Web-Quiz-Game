@@ -99,3 +99,7 @@ main {
 .delete {
     background-color: #de1515;
 }
+
+li a {
+    text-decoration: underline;
+}

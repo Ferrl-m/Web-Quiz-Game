@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Quizzes</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/script.js"></script>
 </head>
 <body>
 
@@ -17,23 +18,29 @@
         </ul>
     </nav>
     <div class="login-signup">
+        <a th:href="@{/quizzes/user/0/__${#authentication.name}__}">My Quizzes</a>
         <a th:href="@{/profile/__${#authentication.name}__}">Profile</a>
         <a href="/logout">Logout</a>
     </div>
 </header>
-<h1 th:text="${theme}" style="text-align: center"></h1>
+<div class="table-container">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by title...">
+        <button id="searchBtn" onclick="search()">&#128269;</button>
+    </div>
 <table>
     <thead>
     <tr>
-        <th>Title</th>
-        <th>Question</th>
-        <th>Author</th>
+        <th onclick="sortTable(0)">Title</th>
+        <th onclick="sortTable(1)">Rating</th>
+        <th onclick="sortTable(2)">Author</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="quiz : ${quizzes}">
         <td th:text="${quiz.title}"></td>
-        <td th:text="${quiz.text}"></td>
+        <td th:text="${quiz.rating}"></td>
         <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}">username</a></td>
         <td th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</td>
     </tr>
@@ -42,6 +49,7 @@
 <div class="paging" >
     <a th:if="${currentPage > 0}" th:href="@{/quizzes/{theme}/{page}(theme=${theme},page=${currentPage - 1})}">&lt;&lt; Previous</a>
     <a th:if="${currentPage < totalPages - 1}" th:href="@{/quizzes/{theme}/{page}(theme=${theme},page=${currentPage + 1})}">Next &gt;&gt;</a>
+</div>
 </div>
 </body>
 </html>

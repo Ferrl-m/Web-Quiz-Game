@@ -74,6 +74,13 @@ public class QuizService {
         return quizDAO.findAllByTheme(theme.toUpperCase(), paging);
     }
 
+    public Page<Quiz> getUserQuizzes(String username, int pageNo) {
+        Pageable paging = PageRequest.of(pageNo, 10);
+        Integer id = userDAO.findByUsername(username).orElseThrow(() -> new ResponseStatusException(NOT_FOUND)).getId();
+
+        return quizDAO.findAllByUser(id, paging);
+    }
+
     public boolean checkAnswer(Integer id, String answer) {
         String expected = getQuiz(id).getAnswer();
         if (expected.equals(answer)) {

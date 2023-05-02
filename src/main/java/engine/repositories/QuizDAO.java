@@ -34,4 +34,7 @@ public interface QuizDAO extends JpaRepository<Quiz, Integer> {
 
     @Query(value = "SELECT * FROM quizzes WHERE theme = :theme", nativeQuery = true)
     Page<Quiz> findAllByTheme(@Param("theme") String theme, Pageable pageable);
+
+    @Query(value = "SELECT * FROM quizzes WHERE user_id = :userId", nativeQuery = true)
+    Page<Quiz> findAllByUser(@Param("userId") Integer userId, Pageable pageable);
 }

@@ -92,7 +92,22 @@ public class QuizController {
     }
 
     // Delete quiz
-    @DeleteMapping("/quizzes/delete/{id}")
+
+    @GetMapping("/quizzes/user/{page}/{username}")
+    public ModelAndView userQuizzes(@PathVariable int page, @PathVariable String username) {
+        Page<Quiz> quizPage = quizService.getUserQuizzes(username, page);
+        List<Quiz> quizzes = quizPage.getContent();
+
+        ModelAndView modelAndView = new ModelAndView("my-quizzes");
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("totalPages", quizPage.getTotalPages());
+        modelAndView.addObject("quizzes", quizzes);
+
+        return modelAndView;
+    }
+
+    @DeleteMapping("/quizzes/{id}/delete")
     public String delete(@PathVariable int id) {
         quizService.deleteQuiz(id);
 
