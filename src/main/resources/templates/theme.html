@@ -42,7 +42,7 @@
         <td th:text="${quiz.title}"></td>
         <td th:text="${quiz.rating}"></td>
         <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}">username</a></td>
-        <td th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</td>
+        <td><a th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</a></td>
     </tr>
     </tbody>
 </table>
