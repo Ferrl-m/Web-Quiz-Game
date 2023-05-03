@@ -1,4 +1,4 @@
-# Web Quiz Game API
+# Web Quiz Game
 This is the Spring web app for the Quiz Game project, built using Spring Boot, Spring Security, and Hibernate.
 
 ## Requirements
@@ -14,9 +14,9 @@ To build and run the Web Quiz Game, you will need the following installed on you
 2. Create a PostgreSQL database and update the `application.properties` file with your database details
 3. Build and run the project
 
-## API Endpoints
+## Endpoints
 
-The following API endpoints are available:
+The following endpoints are available:
 ### GET
 - `GET /quizzes/{page}` - Open a list of quizzes
 - `GET /register` - Open registration page
