@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Creating Quiz</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
@@ -70,9 +70,15 @@
             <h3>Select Theme</h3>
             <select id="theme" name="themes" th:field="*{theme}" required>
                 <option value="" selected disabled>Select theme</option>
-                <option value="MATH">Math</option>
+                <option value="SCIENCE">Science</option>
                 <option value="GEOGRAPHY">Geography</option>
                 <option value="HISTORY">History</option>
+                <option value="FOOD">Food</option>
+                <option value="SPORTS">Sports</option>
+                <option value="TECHNOLOGY">Technology</option>
+                <option value="LITERATURE">Literature</option>
+                <option value="POP">Pop Culture</option>
+                <option value="LOGIC">Logic</option>
             </select>
         </li>
 

@@ -36,15 +36,39 @@
     <section class="themes">
         <h2>Select a Theme</h2>
         <div class="themes-grid">
-            <a th:href="@{/quizzes/math/0}" class="theme-link math">
-                <span>Math</span>
-            </a>
-            <a th:href="@{/quizzes/history/0}" class="theme-link history">
-                <span>History</span>
-            </a>
-            <a th:href="@{/quizzes/geography/0}" class="theme-link geography">
-                <span>Geography</span>
-            </a>
+            <div class="themes-row">
+                <a th:href="@{/quizzes/science/0}" class="theme-link science">
+                    <span>Science</span>
+                </a>
+                <a th:href="@{/quizzes/history/0}" class="theme-link history">
+                    <span>History</span>
+                </a>
+                <a th:href="@{/quizzes/geography/0}" class="theme-link geography">
+                    <span>Geography</span>
+                </a>
+            </div>
+            <div class="themes-row">
+                <a th:href="@{/quizzes/food/0}" class="theme-link food">
+                    <span>Food</span>
+                </a>
+                <a th:href="@{/quizzes/sports/0}" class="theme-link sports">
+                    <span>Sports</span>
+                </a>
+                <a th:href="@{/quizzes/technology/0}" class="theme-link technology">
+                    <span>Technology</span>
+                </a>
+            </div>
+            <div class="themes-row">
+                <a th:href="@{/quizzes/literature/0}" class="theme-link literature">
+                    <span>Literature</span>
+                </a>
+                <a th:href="@{/quizzes/pop/0}" class="theme-link pop">
+                    <span>Pop Culture</span>
+                </a>
+                <a th:href="@{/quizzes/logic/0}" class="theme-link logic">
+                    <span>Logic</span>
+                </a>
+            </div>
         </div>
     </section>
 </main>

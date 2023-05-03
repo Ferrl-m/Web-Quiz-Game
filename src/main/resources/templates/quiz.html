@@ -66,7 +66,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit">Submit Quiz</button>
+        <button th:if="${!isCorrect}" type="submit">Submit Quiz</button>
         <a th:if="${isCorrect}" href="/quizzes/solve">Next Quiz</a>
       </div>
 

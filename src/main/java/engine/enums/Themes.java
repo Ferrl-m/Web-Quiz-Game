@@ -1,7 +1,9 @@
 package engine.enums;
 
 public enum Themes {
-    MATH("Math"), GEOGRAPHY("Geography"), HISTORY("History");
+    SCIENCE("Science"), GEOGRAPHY("Geography"), HISTORY("History"),
+    FOOD("Food"), SPORTS("Sports"), TECHNOLOGY("Technology"),
+    LITERATURE("Literature"), POP("Pop Culture"), LOGIC("Logic");
 
     private String title;
 

@@ -100,6 +100,7 @@ main {
     background-color: #de1515;
 }
 
-li a {
+section a {
     text-decoration: underline;
+    color: #333;
 }
