@@ -521,9 +521,7 @@ td a {
     font-size: 16px;
     border: none;
     cursor: pointer;
-    position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     right: 762px;
     padding: 8px 15px;
     border-radius: 25px;
