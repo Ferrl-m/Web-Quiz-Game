@@ -4,9 +4,9 @@ import engine.controllers.DRO.QuizCreateDTO;
 import engine.models.Quiz;
 import engine.services.QuizService;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -73,9 +73,13 @@ public class QuizController {
     @GetMapping("/quizzes/solve")
     public ModelAndView solve(@RequestParam(required = false) String answer, @RequestParam(required = false) boolean isCorrect) {
         ModelAndView modelAndView = new ModelAndView("quiz");
-        modelAndView.addObject("quiz", quizService.getQuiz());
-        modelAndView.addObject("answer", answer);
-        modelAndView.addObject("isCorrect", isCorrect);
+        try {
+            modelAndView.addObject("quiz", quizService.getQuiz());
+            modelAndView.addObject("answer", answer);
+            modelAndView.addObject("isCorrect", isCorrect);
+        } catch (ResponseStatusException ex) {
+            modelAndView.addObject("error", ex.getReason());
+        }
 
         return modelAndView;
     }

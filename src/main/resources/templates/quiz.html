@@ -28,7 +28,10 @@
 
 <main>
   <section class="quiz">
-    <form action="#" th:action="@{/quizzes/{id}/solve(id = ${quiz.getId()})}" th:object="${quiz}" method="post">
+    <div th:if="${error != null}" class="info-message">
+      <p th:text="${error}"> message</p>
+    </div>
+    <form th:if="${error == null}" action="#" th:action="@{/quizzes/{id}/solve(id = ${quiz.getId()})}" th:object="${quiz}" method="post">
       <input type="hidden" name="quizId" th:value="${quiz.getId()}" />
       <h2 th:text="${quiz.getTitle()}"></h2>
       <h5 th:text="${quiz.getTheme().getTitle()}"></h5>

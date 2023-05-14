@@ -32,8 +32,8 @@
   <table id="myTable">
     <thead>
     <tr>
-      <th onclick="sortTable(0)">Theme</th>
-      <th onclick="sortTable(1)">Title</th>
+      <th onclick="sortTable(0)">Title</th>
+      <th onclick="sortTable(1)">Theme</th>
       <th onclick="sortTable(2)">Rating</th>
       <th onclick="sortTable(3)">Author</th>
       <th></th>
@@ -41,10 +41,10 @@
     </thead>
     <tbody>
     <tr th:each="quiz : ${quizzes}">
-      <td><a th:href="@{/quizzes/{theme}/0(theme=${quiz.getTheme()})}" th:text="${quiz.theme}">${quiz.theme}</a></td>
       <td th:text="${quiz.title}"></td>
+      <td><a th:href="@{/quizzes/{theme}/0(theme=${quiz.getTheme()})}" th:text="${quiz.theme}"></a></td>
       <td th:text="${quiz.rating}"></td>
-      <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}">username</a></td>
+      <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}"></a></td>
       <td><a th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</a></td>
     </tr>
     </tbody>

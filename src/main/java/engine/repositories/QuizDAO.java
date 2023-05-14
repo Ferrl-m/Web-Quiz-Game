@@ -29,8 +29,8 @@ public interface QuizDAO extends JpaRepository<Quiz, Integer> {
     @Override
     Page<Quiz> findAll(Pageable pageable);
 
-    @Query(value = "SELECT * FROM quizzes ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
-    Optional<Quiz> findRandom();
+    @Query(value = "SELECT * FROM quizzes WHERE id NOT IN (SELECT quiz_id FROM completed_quiz WHERE user_id = :userId) ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Optional<Quiz> findRandom(Integer userId);
 
     @Query(value = "SELECT * FROM quizzes WHERE theme = :theme", nativeQuery = true)
     Page<Quiz> findAllByTheme(@Param("theme") String theme, Pageable pageable);

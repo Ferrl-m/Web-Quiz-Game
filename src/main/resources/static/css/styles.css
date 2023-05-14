@@ -259,6 +259,13 @@ input[type="radio"] {
 .quiz form button:hover {
     background-color: #6f42c1;
 }
+.info-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
 /*Answers*/
 .quiz form ol {
     display: grid;

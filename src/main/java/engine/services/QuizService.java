@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +49,8 @@ public class QuizService {
     }
 
     public Quiz getQuiz() {
-        return quizDAO.findRandom().orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+        Integer userId = getCurrentAuthUser().getId();
+        return quizDAO.findRandom(userId).orElseThrow(() -> new ResponseStatusException(NO_CONTENT, "Wow! You have completed all the quizzes we have. Great job!"));
     }
 
     public Quiz addQuiz(QuizCreateDTO quizCreateDTO) {
@@ -85,8 +87,10 @@ public class QuizService {
         String expected = getQuiz(id).getAnswer();
         if (expected.equals(answer)) {
             User user = getCurrentAuthUser();
-            user.getCompletedQuizzes().add(new CompletedQuiz(user, id));
-            userDAO.save(user);
+            if (!getQuiz(id).getUser().equals(user)) {
+                user.getCompletedQuizzes().add(new CompletedQuiz(user, id));
+                userDAO.save(user);
+            }
             return true;
         } else return false;
     }
