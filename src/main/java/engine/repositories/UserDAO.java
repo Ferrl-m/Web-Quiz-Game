@@ -1,6 +1,7 @@
 package engine.repositories;
 
 import engine.models.CompletedQuiz;
+import engine.models.Quiz;
 import engine.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,9 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
     @Override
     void delete(User user);
+
+    @Override
+    Page<User> findAll(Pageable pageable);
 
     Optional<User> findByUsername(String username);
 

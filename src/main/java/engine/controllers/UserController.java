@@ -6,7 +6,7 @@ import engine.models.User;
 import engine.repositories.UserDAO;
 import engine.security.UserDetailsServiceImpl;
 import engine.services.UserService;
-import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,6 +25,9 @@ import javax.validation.groups.Default;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -101,7 +104,7 @@ public class UserController {
     }
 
     @GetMapping("/profile/{username}")
-    public ModelAndView profile(@PathVariable String username) {
+    public ModelAndView profile(@PathVariable String username, Authentication authentication) {
         User user = userDAO.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         ModelAndView modelAndView = new ModelAndView("profile");
         modelAndView.addObject("username", user.getUsername());
@@ -109,6 +112,7 @@ public class UserController {
         modelAndView.addObject("createdAt", user.getCreatedAt());
         modelAndView.addObject("completed", user.getCompletedQuizzes().size());
         modelAndView.addObject("quizzesCreated", user.getQuizzesCreated());
+        modelAndView.addObject("role", authentication.getAuthorities().toString());
 
         return modelAndView;
     }
@@ -131,6 +135,21 @@ public class UserController {
                                     RedirectAttributes redirectAttributes) {
 
         return userService.update(authentication, newUsername, newEmail, newPassword, redirectAttributes);
+    }
+
+    @GetMapping("/users/{page}")
+    public ModelAndView users(@PathVariable int page) {
+        Page<User> userPage = userService.getUserList(page);
+        List<User> users = new ArrayList<>(userPage.getContent());
+        users.sort(Comparator.comparing(User::getQuizzesCreated).reversed());
+
+        ModelAndView modelAndView = new ModelAndView("top-users");
+        modelAndView.addObject("currentPage", page);
+
+        modelAndView.addObject("totalPages", userPage.getTotalPages());
+        modelAndView.addObject("users", users);
+
+        return modelAndView;
     }
 
     private static ModelAndView createModelAndView(UserCreateDTO userCreateDTO, String errorMessage, String page) {

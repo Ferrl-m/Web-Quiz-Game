@@ -11,9 +11,9 @@
     <a href="/"><h1>Quiz Game</h1></a>
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
             <li><a href="/quizzes/0">Quizzes</a></li>
             <li><a href="/quizzes/create">Create Quiz</a></li>
+            <li><a href="/users/0">Top Users</a></li>
         </ul>
     </nav>
     <div sec:authorize="isAnonymous()" class="login-signup">
@@ -35,8 +35,8 @@
             <li><span>Joined:</span><span th:text="${createdAt}"></span></li>
             <li><span>Completed Quizzes:</span><span th:text="${completed}"></span></li>
             <li><a th:href="@{/quizzes/{username}/0(username=${username})}"><span >Created Quizzes:</span> <span th:text="${quizzesCreated}"></span></a></li>
-            <li th:if="${#authentication.name == username}">
-                <button type="button" class="btn" onclick="location.href='/users/change-credentials'">Change Credentials</button>
+            <li th:if="${role.equals('[ADMIN]')}">
+                <button th:if="${#authentication.name == username}" type="button" class="btn" onclick="location.href='/users/change-credentials'">Change Credentials</button>
                 <button type="button" class="btn delete" th:attr="onclick=|confirmDelete('${username}')|">Delete Account</button>
             </li>
         </ul>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/script.js"></script>
+</head>
+<body>
+
+<header>
+  <a href="/"><h1>Quiz Game</h1></a>
+  <nav>
+    <ul>
+      <li><a href="/quizzes/0">Quizzes</a></li>
+      <li><a href="/quizzes/create">Create Quiz</a></li>
+      <li><a href="/users/0">Top Users</a></li>
+    </ul>
+  </nav>
+  <div class="login-signup">
+    <a th:href="@{/quizzes/user/0/__${#authentication.name}__}">My Quizzes</a>
+    <a th:href="@{/profile/__${#authentication.name}__}">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</header>
+<div class="table-container">
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search by username...">
+    <button id="searchBtn" onclick="search()">&#128269;</button>
+  </div>
+
+  <table id="myTable">
+    <thead>
+    <tr>
+      <th onclick="sortTable(0)">Username</th>
+      <th onclick="sortTable(1)">Created Quizzes</th>
+      <th onclick="sortTable(2)">Completed Quizzes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td><a th:href="@{/profile/{username}(username=${user.username})}" th:text="${user.username}"></a></td>
+      <td><a th:href="@{/quizzes/user/0/{username}(username=${user.username})}" th:text="${user.quizzesCreated}"></a></td>
+      <td th:text="${user.completedQuizzes.size()}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="paging" >
+    <a th:if="${currentPage > 0}" th:href="@{/users/{page}(page=${currentPage - 1})}">&lt;&lt; Previous</a>
+    <a th:if="${currentPage < totalPages - 1}" th:href="@{/users/{page}(page=${currentPage + 1})}">Next &gt;&gt;</a>
+  </div>
+</div>
+
+</body>
+</html>

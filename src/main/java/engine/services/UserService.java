@@ -2,10 +2,14 @@ package engine.services;
 
 import engine.controllers.DRO.UserCreateDTO;
 import engine.exceptions.UserException;
+import engine.models.Quiz;
 import engine.models.User;
 import engine.repositories.UserDAO;
 import engine.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -94,8 +98,15 @@ public class UserService {
         return new ModelAndView("redirect:/");
     }
 
+    public Page<User> getUserList(int pageNo) {
+        Pageable paging = PageRequest.of(pageNo, 10);
+
+        return userDAO.findAll(paging);
+    }
+
     public ResponseEntity<String> deleteUser(String username) {
-        if (username.equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+        Authentication current = SecurityContextHolder.getContext().getAuthentication();
+        if (username.equals(current.getName()) || current.getAuthorities().toString().equals("[ADMIN]")) {
             userDAO.delete(userDAO.findByUsername(username).get());
         } else throw new ResponseStatusException(FORBIDDEN);
 

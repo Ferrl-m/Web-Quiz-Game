@@ -12,7 +12,7 @@ function confirmDelete(username) {
             })
             .then(function(text) {
                 console.log('Account deleted:', text);
-                window.location.href = '/login';
+                window.location.href = '/';
             })
             .catch(function(error) {
                 console.error('Error deleting account:', error);
@@ -34,7 +34,7 @@ function confirmQuizDelete(quiz) {
             })
             .then(function(text) {
                 console.log('Quiz deleted:', text);
-                window.location.href = '/';
+                window.location.href = '/quizzes/0';
             })
             .catch(function(error) {
                 console.error('Error deleting quiz:', error);

@@ -5,6 +5,7 @@ import engine.models.Quiz;
 import engine.services.QuizService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +30,7 @@ public class QuizController {
 
     // Get all quizzes
     @GetMapping("/quizzes/{page}")
-    public ModelAndView quizzes(@PathVariable int page) {
+    public ModelAndView quizzes(@PathVariable int page, Authentication authentication) {
         Page<Quiz> quizPage = quizService.getQuizList(page);
         List<Quiz> quizzes = quizPage.getContent();
 
@@ -37,6 +38,7 @@ public class QuizController {
         modelAndView.addObject("currentPage", page);
         modelAndView.addObject("totalPages", quizPage.getTotalPages());
         modelAndView.addObject("quizzes", quizzes);
+        modelAndView.addObject("role", authentication.getAuthorities().toString());
 
         return modelAndView;
     }

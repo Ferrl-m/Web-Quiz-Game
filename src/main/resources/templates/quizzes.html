@@ -12,9 +12,9 @@
   <a href="/"><h1>Quiz Game</h1></a>
   <nav>
     <ul>
-      <li><a href="/">Home</a></li>
       <li><a href="/quizzes/0">Quizzes</a></li>
       <li><a href="/quizzes/create">Create Quiz</a></li>
+      <li><a href="/users/0">Top Users</a></li>
     </ul>
   </nav>
   <div class="login-signup">
@@ -37,6 +37,7 @@
       <th onclick="sortTable(2)">Rating</th>
       <th onclick="sortTable(3)">Author</th>
       <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -46,6 +47,7 @@
       <td th:text="${quiz.rating}"></td>
       <td><a th:href="@{/profile/{username}(username=${quiz.getUser().getUsername()})}" th:text="${quiz.getUser().getUsername()}"></a></td>
       <td><a th:href="@{/quizzes/{id}/solve(id=${quiz.getId()})}">Solve</a></td>
+      <td th:if="${role.equals('[ADMIN]')}"><a class="text-danger" th:attr="onclick=|confirmQuizDelete('${quiz.getId()}')|">Delete</a></td>
     </tr>
     </tbody>
   </table>

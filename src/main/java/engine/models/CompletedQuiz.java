@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Setter
@@ -39,5 +40,23 @@ public class CompletedQuiz {
         this.user = user;
         this.quizId = quizId;
         this.completedAt = completedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CompletedQuiz that = (CompletedQuiz) o;
+
+        if (!Objects.equals(user, that.user)) return false;
+        return Objects.equals(quizId, that.quizId);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (quizId != null ? quizId.hashCode() : 0);
+        return result;
     }
 }

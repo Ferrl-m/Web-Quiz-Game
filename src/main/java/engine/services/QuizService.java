@@ -99,7 +99,7 @@ public class QuizService {
         User user = getCurrentAuthUser();
         Quiz quiz = quizDAO.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
-        if (quiz.getUser().equals(user)) {
+        if (quiz.getUser().equals(user) || getCurrentAuthUser().getRole().equals("ADMIN")) {
             user.getQuizzes().remove(quiz);
             quizDAO.deleteById(id);
             user.getCompletedQuizzes().removeAll(user.getCompletedQuizzes().stream().filter(completedQuiz -> completedQuiz.getQuizId() == id).collect(Collectors.toList()));
